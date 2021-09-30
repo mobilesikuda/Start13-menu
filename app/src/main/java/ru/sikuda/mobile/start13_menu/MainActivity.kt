@@ -4,12 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //set view on context menu
+        val textView: TextView = findViewById(R.id.simple_text)
+        val button: Button = findViewById(R.id.button)
+        registerForContextMenu(button)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -35,22 +43,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateContextMenu(menu: ContextMenu, v: View,
                                      menuInfo: ContextMenu.ContextMenuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.context_menu, menu)
+        menu.add(Menu.NONE, R.id.simple_text, Menu.NONE, "Открыть")
+        //val inflater: MenuInflater = menuInflater
+        //inflater.inflate(R.menu.context_menu, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         return when (item.itemId) {
-            R.id.item -> {
-                //editNote(info.id)
+            R.id.item_context -> {
+                Toast.makeText(this, "Item context", Toast.LENGTH_SHORT)
+                    .show()
                 true
             }
             else -> super.onContextItemSelected(item)
         }
     }
-
-
-
 
 }
